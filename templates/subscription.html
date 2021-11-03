@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+        <article class="media content-section">
+          <div class="media-body">
+            {% for musician in subscriptions %}
+            <div class="article-metadata">
+                <img class="rounded-circle article-img" src="https://1musicpic.s3.amazonaws.com/{{musician.title}}">
+            </div>
+            <h2><a class="article-title" href="#">{{ musician.title }}</a></h2>
+            <p class="article-content">By: {{ musician.artist }}</p>
+            <p class="article-content">Made in: {{ musician.year }}</p>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('unsubscribe', title = musician.title)}}">Remove</a><hr>
+            {%endfor%}
+          </div>
+        </article>
+{% endblock content %}

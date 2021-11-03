@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Search</legend>
+            <div class="form-group">
+                {{ form.title.label(class="form-control-label") }}
+                {% if form.title.errors %}
+                    {{ form.title(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.title(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.artist.label(class="form-control-label") }}
+                {% if form.artist.errors %}
+                    {{ form.artist(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.artist.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.artist(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.year.label(class="form-control-label") }}
+                {% if form.year.errors %}
+                    {{ form.year(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.year.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.year(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+        <article class="media content-section">
+          <div class="media-body">
+            {% for result in results %}
+            <div class="article-metadata">
+                <img class="rounded-circle article-img" src="https://1musicpic.s3.amazonaws.com/{{result.title}}">
+            </div>
+            <h2><a class="article-title" href="#">{{ result.title }}</a></h2>
+            <p class="article-content">By: {{ result.artist }}</p>
+            <p class="article-content">Made in: {{ result.year }}</p>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('subscribe', title = result.title,artist = result.artist, year = result.year)}}">Subscribe</a><hr>
+            {%endfor%}
+          </div>
+        </article>
+        {{Pagination.links}}
+{% endblock content %}
